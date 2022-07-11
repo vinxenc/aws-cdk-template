@@ -1,0 +1,50 @@
+{
+  "name": "aws-cdk-template",
+  "version": "0.1.0",
+  "bin": {
+    "aws-cdk-template": "bin/aws-cdk-template.js"
+  },
+  "scripts": {
+    "build": "tsc",
+    "watch": "tsc -w",
+    "test": "jest",
+    "cdk": "cdk",
+    "local": "sam local start-api -t ./cdk.out/AwsCdkTemplateStack.template.json --warm-containers EAGER",
+    "prepare": "husky install"
+  },
+  "devDependencies": {
+    "@types/jest": "^27.5.0",
+    "@types/node": "10.17.27",
+    "@types/prettier": "2.6.0",
+    "@types/aws-lambda": "^8.10.101",
+    "@types/lodash": "^4.14.182",
+    "aws-cdk": "2.24.1",
+    "aws-cdk-lib": "2.24.1",
+    "constructs": "^10.0.0",
+    "husky": "^8.0.1",
+    "jest": "^27.5.1",
+    "source-map-support": "^0.5.21",
+    "ts-jest": "^27.1.4",
+    "ts-node": "^10.7.0",
+    "typescript": "~3.9.7",
+    "@aws-cdk/aws-apigatewayv2-alpha": "^2.31.1-alpha.0",
+    "@aws-cdk/aws-apigatewayv2-authorizers-alpha": "^2.31.1-alpha.0",
+    "@aws-cdk/aws-apigatewayv2-integrations-alpha": "^2.31.1-alpha.0",
+    "aws-lambda": "^1.0.7"
+  },
+  "dependencies": {
+    "@dazn/lambda-powertools-logger": "^1.28.1",
+    "envalid": "^7.3.1",
+    "lodash": "^4.17.21",
+    "fastest-validator-decorators": "^1.3.0"
+  },
+  "private": true,
+	"workspaces": {
+		"packages": [
+			"src/layers/core/nodejs"
+		],
+		"nohoist": [
+			"**"
+		]
+	}
+}
