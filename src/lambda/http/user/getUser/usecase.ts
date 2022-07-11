@@ -3,7 +3,7 @@ import { GetUserPath } from './validator';
 import { addNumber } from '/opt/core/common';
 
 export const execute = async (
-	event: EventRequest<GetUserPath, unknown, unknown>,
+	event: HttpEventRequest<GetUserPath, unknown, unknown>,
 	context: Context,
 ): Promise<APIGatewayProxyResultV2> => {
 	await Promise.resolve(true);
