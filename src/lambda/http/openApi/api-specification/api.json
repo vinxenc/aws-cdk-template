@@ -1,0 +1,732 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "version": "2.0.0",
+    "title": "MediaLake"
+  },
+  "servers": [
+    {
+      "url": "https://p3oi20yjje.execute-api.eu-central-1.amazonaws.com/dev",
+      "description": "Local server"
+    }
+  ],
+  "paths": {
+    "/assets": {
+      "post": {
+        "description": "Upload new MediaAsset",
+        "security": [
+          {
+            "OAuth2": []
+          }
+        ],
+        "tags": [
+          "Asset"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/Asset"
+                  },
+                  {
+                    "$ref": "#/components/schemas/AssetArticles"
+                  },
+                  {
+                    "type": "object",
+                    "required": [
+                      "source"
+                    ],
+                    "properties": {
+                      "source": {
+                        "type": "object",
+                        "required": [
+                          "url"
+                        ],
+                        "properties": {
+                          "url": {
+                            "type": "string",
+                            "format": "uri"
+                          },
+                          "urlValidUntil": {
+                            "type": "string",
+                            "format": "date-time"
+                          }
+                        }
+                      }
+                    }
+                  }
+                ]
+              }
+            },
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/Asset"
+                  },
+                  {
+                    "$ref": "#/components/schemas/AssetArticles"
+                  },
+                  {
+                    "type": "object",
+                    "required": [
+                      "file"
+                    ],
+                    "properties": {
+                      "file": {
+                        "type": "string",
+                        "format": "binary"
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/Asset"
+                    },
+                    {
+                      "$ref": "#/components/schemas/Entity"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "file": {
+                          "type": "object",
+                          "allOf": [
+                            {
+                              "$ref": "#/components/schemas/File"
+                            },
+                            {
+                              "$ref": "#/components/schemas/Entity"
+                            }
+                          ]
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/assets/{asset_id}": {
+      "post": {
+        "description": "Uploads a new File for a specified Asset",
+        "security": [
+          {
+            "OAuth2": []
+          }
+        ],
+        "tags": [
+          "Asset"
+        ],
+        "parameters": [
+          {
+            "name": "asset_id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "allOf": [
+                  {
+                    "type": "object",
+                    "required": [
+                      "source"
+                    ],
+                    "properties": {
+                      "originFileId": {
+                        "type": "string",
+                        "format": "uuid"
+                      },
+                      "source": {
+                        "type": "object",
+                        "required": [
+                          "url"
+                        ],
+                        "properties": {
+                          "url": {
+                            "type": "string",
+                            "format": "uri"
+                          },
+                          "urlValidUntil": {
+                            "type": "string",
+                            "format": "date-time"
+                          }
+                        }
+                      }
+                    }
+                  }
+                ]
+              }
+            },
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "allOf": [
+                  {
+                    "type": "object",
+                    "required": [
+                      "file"
+                    ],
+                    "properties": {
+                      "originFileId": {
+                        "type": "string",
+                        "format": "uuid"
+                      },
+                      "file": {
+                        "type": "string",
+                        "format": "binary"
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/Asset"
+                    },
+                    {
+                      "$ref": "#/components/schemas/Entity"
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "description": "Updates values for an Asset",
+        "security": [
+          {
+            "OAuth2": []
+          }
+        ],
+        "tags": [
+          "Asset"
+        ],
+        "parameters": [
+          {
+            "name": "asset_id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Asset"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/Asset"
+                    },
+                    {
+                      "$ref": "#/components/schemas/Entity"
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/assets/{asset_id}/articles": {
+      "put": {
+        "description": "Connects existing Asset with specified Articles",
+        "security": [
+          {
+            "OAuth2": []
+          }
+        ],
+        "tags": [
+          "Asset"
+        ],
+        "parameters": [
+          {
+            "name": "asset_id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "$ref": "#/components/schemas/AssetArticles"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "OK"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Not Found"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "description": "Removes Asset from specified Articles",
+        "security": [
+          {
+            "OAuth2": []
+          }
+        ],
+        "tags": [
+          "Asset"
+        ],
+        "parameters": [
+          {
+            "name": "asset_id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/Gtin"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "OK"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/assets/{asset_id}/articles/{gtin}": {
+      "patch": {
+        "description": "Updates LegacyId, OrderId or ReleasedAt date for Article",
+        "security": [
+          {
+            "OAuth2": []
+          }
+        ],
+        "tags": [
+          "Asset"
+        ],
+        "parameters": [
+          {
+            "name": "asset_id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "gtin",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "$ref": "#/components/schemas/Gtin"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "orderId": {
+                    "type": "number"
+                  },
+                  "legacyMediaId": {
+                    "type": "number"
+                  },
+                  "releasedAt": {
+                    "type": "string",
+                    "format": "date-time"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "OK"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/assets/{asset_id}/release": {
+      "post": {
+        "description": "Removes Asset from specified Articles",
+        "security": [
+          {
+            "OAuth2": []
+          }
+        ],
+        "tags": [
+          "Asset"
+        ],
+        "parameters": [
+          {
+            "name": "asset_id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AssetArticles"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "OK"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Entity": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "Checksum": {
+        "type": "string",
+        "pattern": "/^([a-f\\d]{32}|[A-F\\d]{32})$/"
+      },
+      "Gtin": {
+        "type": "string",
+        "pattern": "/^\\d{13}$/",
+        "example": 1234567891234
+      },
+      "AssetArticles": {
+        "type": "object",
+        "required": [
+          "articles"
+        ],
+        "properties": {
+          "articles": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": [
+                "gtin"
+              ],
+              "properties": {
+                "gtin": {
+                  "$ref": "#/components/schemas/Gtin"
+                },
+                "orderId": {
+                  "type": "number"
+                },
+                "legacyMediaId": {
+                  "type": "number"
+                },
+                "releasedAt": {
+                  "type": "string",
+                  "format": "date-time"
+                }
+              }
+            }
+          }
+        }
+      },
+      "Asset": {
+        "type": "object",
+        "required": [
+          "type",
+          "channel",
+          "articles"
+        ],
+        "properties": {
+          "status": {
+            "type": "string",
+            "enum": [
+              "ML010New",
+              "ML030Imported",
+              "ML040Processing",
+              "ML050Processed",
+              "ML060QaPending",
+              "ML070QaApproved",
+              "ML090Retired",
+              "ML099Error"
+            ]
+          },
+          "type": {
+            "type": "string",
+            "enum": [
+              "ProcessableImage",
+              "AuxiliaryImage",
+              "SwatchImage"
+            ]
+          },
+          "hasCopyright": {
+            "type": "boolean"
+          },
+          "licenseValidFrom": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "licenseValidUntil": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "channel": {
+            "type": "string"
+          },
+          "attributes": {
+            "type": "object",
+            "example": {
+              "subject": "TextileStandalone",
+              "perspective": "Front"
+            }
+          }
+        }
+      },
+      "File": {
+        "type": "object",
+        "properties": {
+          "assetId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "checksum": {
+            "$ref": "#/components/schemas/Checksum"
+          },
+          "contentType": {
+            "type": "string",
+            "enum": [
+              "image/jpeg",
+              "image/png",
+              "image/tiff",
+              "image/webp",
+              "image/svg+xml",
+              "image/gif",
+              "application/pdf"
+            ]
+          },
+          "extension": {
+            "type": "string",
+            "enum": [
+              ".jpeg",
+              ".png",
+              ".tif",
+              ".webp",
+              ".svg",
+              ".gif",
+              ".pdf"
+            ]
+          },
+          "fileSize": {
+            "type": "number"
+          },
+          "width": {
+            "type": "number"
+          },
+          "height": {
+            "type": "number"
+          },
+          "channel": {
+            "type": "string"
+          }
+        }
+      },
+      "Error": {
+        "type": "object",
+        "required": [
+          "code",
+          "message"
+        ],
+        "properties": {
+          "code": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "message": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "securitySchemes": {
+      "OAuth2": {
+        "type": "oauth2",
+        "description": "The API uses OAuth2 with the pkce flow.",
+        "flows": {
+          "clientCredentials": {
+            "tokenUrl": "http://localhost/token",
+            "refreshUrl": "http://localhost/refresh"
+          }
+        }
+      }
+    }
+  },
+  "security": [
+    {
+      "OAuth2": []
+    }
+  ]
+}
