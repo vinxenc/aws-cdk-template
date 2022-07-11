@@ -8,6 +8,7 @@
     "build": "tsc",
     "watch": "tsc -w",
     "test": "jest",
+    "test:cov": "jest --coverage",
     "cdk": "cdk",
     "local": "sam local start-api -t ./cdk.out/AwsCdkTemplateStack.template.json --warm-containers EAGER",
     "prepare": "husky install"
