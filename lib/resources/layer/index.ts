@@ -30,10 +30,6 @@ export class Layer {
 						bundling: {
 							user: 'root',
 							image: Runtime.NODEJS_16_X.bundlingImage,
-							environment: {
-								npm_config_cache: '/tmp/npm_cache',
-								npm_config_update_notifier: 'false',
-							},
 							command: [
 								'bash',
 								'-xc',

@@ -12,12 +12,10 @@ export class Response {
 	}
 
 	public send(data: string) {
-		const result = {
+		return {
 			statusCode: this._status,
 			body: data,
 		};
-
-		return result;
 	}
 
 	public json(data: object) {
