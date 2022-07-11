@@ -1,0 +1,36 @@
+name: GitHub Actions Demo
+on:
+  push:
+    branches:
+      - develop
+  pull_request:
+    branches:
+      - develop
+jobs:
+  Workflow-Unitest:
+    name: Run action Nodejs
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [16.x]
+    steps:
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - name: Install Yarn Dependencies
+        run: npm install --global yarn
+
+      - uses: actions/checkout@v2
+
+      - name: Install Dependencies
+        run: yarn install --force
+
+      - name: check file
+        run: ls
+
+      - name: Run Test Coverage
+        run: yarn run test:cov
+
+        
