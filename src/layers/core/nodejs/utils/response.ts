@@ -2,6 +2,7 @@ import { StatusCodes } from 'http-status-codes';
 
 export class Response {
 	private _status: StatusCodes;
+
 	public constructor() {
 		this._status = StatusCodes.OK;
 	}
