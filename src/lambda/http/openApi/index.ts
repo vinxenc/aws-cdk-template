@@ -1,14 +1,13 @@
 import express from 'express';
 import serverless from 'serverless-http';
 import swaggerUI from './swagger-ui';
+import swaggerDocument from './api-specification/api.json';
 
 const options = {
 	explorer: true,
 };
 
 const app = express();
-import swaggerDocument from './api-specification/api.json';
-console.log(swaggerDocument, 'swaggerDocument');
 app.use(
 	'/docs',
 	swaggerUI.serve,

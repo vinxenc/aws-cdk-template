@@ -6,13 +6,13 @@ export const execute = async (
 	context: Context,
 ): Promise<APIGatewayProxyResultV2> => {
 	await Promise.resolve(true);
-	const body = event.body;
-	const res = event.response;
+	const { body, response, } = event;
+	
 	const result = {
 		message: 'Hello User!',
 		input: event,
-		context: context,
+		context,
 		body: { usernamr: body.username },
 	};
-	return res.json(result);
+	return response.json(result);
 };
