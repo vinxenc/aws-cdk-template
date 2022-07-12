@@ -1,3 +1,4 @@
+/* eslint-disable consistent-return */
 import middy from '@middy/core';
 import { APIGatewayProxyResultV2 } from 'aws-lambda';
 import Validator, { ValidatorConstructorOptions } from 'fastest-validator';

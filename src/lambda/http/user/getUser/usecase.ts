@@ -7,12 +7,12 @@ export const execute = async (
 	context: Context,
 ): Promise<APIGatewayProxyResultV2> => {
 	await Promise.resolve(true);
-	const id = event.pathParameters.id;
+	const { id }= event.pathParameters;
 	const res = event.response;
 	const result = {
 		message: 'Hello User!',
 		input: event,
-		context: context,
+		context,
 		add: addNumber(6, 4),
 		id,
 	};

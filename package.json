@@ -11,6 +11,8 @@
     "test:cov": "jest --coverage",
     "cdk": "cdk",
     "local": "sam local start-api -t ./cdk.out/AwsCdkTemplateStack.template.json --warm-containers EAGER",
+    "lint": "eslint 'src/**/*.ts'",
+		"prettier:write": "prettier --config .prettierrc --ignore-path=.prettierignore --write **/*.ts",
     "prepare": "husky install"
   },
   "devDependencies": {
@@ -21,6 +23,11 @@
     "@types/lodash": "^4.14.182",
     "@types/express": "^4.17.13",
     "@types/serve-static": "^1.13.10",
+    "@aws-cdk/aws-apigatewayv2-alpha": "^2.31.1-alpha.0",
+    "@aws-cdk/aws-apigatewayv2-authorizers-alpha": "^2.31.1-alpha.0",
+    "@aws-cdk/aws-apigatewayv2-integrations-alpha": "^2.31.1-alpha.0",
+    "@typescript-eslint/parser": "^5.30.6",
+    "@typescript-eslint/eslint-plugin": "^5.30.6",
     "aws-cdk": "2.24.1",
     "aws-cdk-lib": "2.24.1",
     "constructs": "^10.0.0",
@@ -30,10 +37,14 @@
     "ts-jest": "^27.1.4",
     "ts-node": "^10.7.0",
     "typescript": "~3.9.7",
-    "@aws-cdk/aws-apigatewayv2-alpha": "^2.31.1-alpha.0",
-    "@aws-cdk/aws-apigatewayv2-authorizers-alpha": "^2.31.1-alpha.0",
-    "@aws-cdk/aws-apigatewayv2-integrations-alpha": "^2.31.1-alpha.0",
-    "aws-lambda": "^1.0.7"
+    "aws-lambda": "^1.0.7",
+    "eslint": "^8.19.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+		"eslint-config-prettier": "^8.5.0",
+		"eslint-plugin-import": "^2.26.0",
+		"eslint-plugin-prettier": "^4.0.0",
+		"lint-staged": "^12.4.1",
+		"prettier": "^2.6.2"
   },
   "dependencies": {
     "@dazn/lambda-powertools-logger": "^1.28.1",
@@ -51,6 +62,12 @@
 		],
 		"nohoist": [
 			"**"
+		]
+	},
+  "lint-staged": {
+		"packages/**/*.ts": [
+			"yarn prettier:write",
+			"yarn lint"
 		]
 	}
 }

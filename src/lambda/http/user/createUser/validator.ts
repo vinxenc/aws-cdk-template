@@ -4,6 +4,7 @@ import { Schema, String } from 'fastest-validator-decorators';
 export class CreatUserBody {
 	@String()
 	username!: string;
+	
 	@String()
 	password!: string;
 }
